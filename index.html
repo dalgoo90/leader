@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFF6EF">
+<meta name="description" content="학교생활과 학생회 활동 속 상황으로 알아보는 나의 리더십 유형 테스트">
+<meta property="og:title" content="나는 어떤 리더일까?">
+<meta property="og:description" content="10가지 상황으로 알아보는 나의 리더십 강점과 성장 방향">
+<title>나는 어떤 리더일까?</title>
+<style>
+  :root {
+    --bg: #FFF6EF;
+    --bg2: #F3EEFF;
+    --card: #FFFFFF;
+    --text: #36314D;
+    --sub: #6E6888;
+    --line: #ECE6F4;
+    --accent: #6B5BE0;
+    --accent-soft: #EEEBFF;
+    --danger: #E86A6A;
+    --L: #F7A8C0; --L-soft: #FFEAF1; --L-deep: #D9577F;
+    --D: #FFBE7A; --D-soft: #FFF1E1; --D-deep: #D9822B;
+    --M: #8FD6BE; --M-soft: #E5F7F0; --M-deep: #2F9A76;
+    --C: #B5A3F2; --C-soft: #F0ECFF; --C-deep: #6E57D6;
+    --radius: 24px;
+    --shadow: 0 8px 24px rgba(90, 70, 140, 0.10);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text);
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  #app {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 20px 16px calc(40px + env(safe-area-inset-bottom));
+  }
+  h1, h2, h3, p { margin: 0; }
+  button { font-family: inherit; font-size: inherit; color: inherit; }
+  .fade-in { animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* 공통 카드 & 버튼 */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 20px;
+    margin-bottom: 16px;
+  }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%;
+    min-height: 58px;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 18px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .1s ease, box-shadow .2s ease, background .2s ease, opacity .2s;
+    text-align: center;
+    line-height: 1.35;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(107, 91, 224, .3); }
+  .btn-secondary { background: #fff; color: var(--text); border: 2px solid var(--line); }
+  .btn-soft { background: var(--accent-soft); color: var(--accent); }
+  .btn.is-disabled { background: #D9D5E6; color: #fff; box-shadow: none; }
+  .btn-row { display: flex; gap: 10px; }
+  .btn-row .btn { flex: 1; }
+  .btn-row .btn-prev { flex: 0 0 38%; }
+  .stack > * + * { margin-top: 10px; }
+  .link-btn {
+    background: none; border: none; color: var(--sub); text-decoration: underline;
+    font-size: 15px; padding: 12px; cursor: pointer; display: block; margin: 6px auto 0;
+  }
+
+  /* 시작 화면 */
+  .hero-art { display: block; width: 100%; max-width: 340px; margin: 4px auto 0; }
+  .bob { animation: bob 3s ease-in-out infinite; transform-origin: center; }
+  .bob.d1 { animation-delay: .4s; } .bob.d2 { animation-delay: .8s; } .bob.d3 { animation-delay: 1.2s; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .badge {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 700;
+  }
+  .title-wrap { text-align: center; margin: 8px 0 18px; }
+  .title-wrap h1 { font-size: 32px; line-height: 1.3; margin-top: 10px; letter-spacing: -0.5px; }
+  .title-wrap p { color: var(--sub); margin-top: 10px; font-size: 16.5px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 4px 0 18px; }
+  .pill { background: #fff; border-radius: 999px; padding: 8px 14px; font-size: 14.5px; font-weight: 600; box-shadow: 0 3px 10px rgba(90,70,140,.08); }
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .type-chip { border-radius: 18px; padding: 14px 12px; text-align: center; }
+  .type-chip .emo { font-size: 30px; line-height: 1.2; }
+  .type-chip b { display: block; font-size: 16px; margin-top: 4px; }
+  .type-chip span { display: block; font-size: 13px; color: var(--sub); line-height: 1.45; margin-top: 2px; }
+  .note { font-size: 14.5px; color: var(--sub); text-align: center; margin-top: 14px; }
+  .section-label { font-size: 15px; font-weight: 700; color: var(--sub); margin-bottom: 12px; }
+
+  /* 문항 화면 */
+  .progress-head { display: flex; justify-content: space-between; align-items: center; margin: 4px 2px 8px; font-weight: 700; }
+  .progress-head .count { color: var(--accent); font-size: 16px; }
+  .progress-head .home { background: none; border: none; color: var(--sub); font-size: 15px; padding: 8px 4px; cursor: pointer; }
+  .progress { height: 12px; background: #fff; border-radius: 999px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,.06); }
+  .progress > div { height: 100%; background: linear-gradient(90deg, #A79BFF, var(--accent)); border-radius: 999px; transition: width .35s ease; }
+  .dots { display: flex; gap: 6px; justify-content: center; margin: 12px 0 16px; flex-wrap: wrap; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: #DDD8EA; display: block; }
+  .dots i.done { background: #A79BFF; }
+  .dots i.now { background: var(--accent); transform: scale(1.35); }
+  .q-card { text-align: center; padding-top: 26px; }
+  .q-emoji { font-size: 46px; line-height: 1; width: 84px; height: 84px; margin: 0 auto 12px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+  .q-num { font-size: 14px; color: var(--accent); font-weight: 800; letter-spacing: 1px; }
+  .q-text { font-size: 21px; line-height: 1.5; margin-top: 6px; font-weight: 800; }
+  .q-sub { color: var(--sub); font-size: 15px; margin-top: 6px; }
+  .options { margin-bottom: 16px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 12px;
+    width: 100%; text-align: left;
+    background: #fff; border: 2.5px solid transparent; border-radius: 20px;
+    padding: 16px 16px; margin-bottom: 10px; min-height: 64px;
+    box-shadow: 0 4px 14px rgba(90,70,140,.08);
+    cursor: pointer; font-size: 16.5px; line-height: 1.55;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .opt:active { transform: scale(0.985); }
+  .opt .letter {
+    flex: 0 0 34px; height: 34px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 16px;
+    transition: background .15s, color .15s;
+  }
+  .opt .txt { flex: 1; padding-top: 4px; }
+  .opt .check { flex: 0 0 24px; height: 24px; margin-top: 5px; opacity: 0; transition: opacity .15s; color: var(--accent); font-weight: 900; font-size: 20px; line-height: 24px; text-align: center; }
+  .opt.selected { border-color: var(--accent); background: #F7F5FF; }
+  .opt.selected .letter { background: var(--accent); color: #fff; }
+  .opt.selected .check { opacity: 1; }
+  .hint { text-align: center; color: var(--sub); font-size: 14.5px; margin-top: 12px; min-height: 22px; }
+
+  /* 결과 화면 */
+  .result-hero { text-align: center; padding: 28px 20px; position: relative; overflow: hidden; }
+  .result-hero .eyebrow { font-size: 15px; color: var(--sub); font-weight: 700; }
+  .result-icons { display: flex; justify-content: center; gap: 10px; margin: 14px 0 8px; flex-wrap: wrap; }
+  .result-icon { width: 92px; height: 92px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 48px; animation: pop .5s ease; }
+  .result-icons.multi .result-icon { width: 70px; height: 70px; font-size: 36px; }
+  @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 70% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+  .result-name { font-size: 28px; font-weight: 800; line-height: 1.35; margin-top: 6px; }
+  .result-tagline { color: var(--sub); margin-top: 8px; font-size: 16px; }
+  .score-badge { display: inline-block; margin-top: 14px; padding: 8px 16px; border-radius: 999px; font-weight: 800; font-size: 15.5px; background: var(--accent-soft); color: var(--accent); }
+  .tie-note { margin-top: 14px; font-size: 15px; background: #FFF8E8; color: #8A6A1F; border-radius: 14px; padding: 12px 14px; }
+  .bars .row { margin-bottom: 14px; }
+  .bars .row:last-child { margin-bottom: 0; }
+  .bars .lbl { display: flex; justify-content: space-between; font-size: 15.5px; font-weight: 700; margin-bottom: 6px; }
+  .bars .lbl .top-tag { font-size: 12px; background: var(--accent); color: #fff; border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: 2px; }
+  .bars .track { height: 18px; background: #F3F0F8; border-radius: 999px; overflow: hidden; }
+  .bars .fill { height: 100%; width: 0; border-radius: 999px; transition: width .9s cubic-bezier(.2,.8,.2,1); }
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tab { flex: 1 1 40%; min-height: 50px; border-radius: 16px; border: 2px solid var(--line); background: #fff; font-weight: 700; font-size: 16px; cursor: pointer; padding: 8px; }
+  .tab.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .detail-desc { font-size: 16.5px; border-radius: 18px; padding: 16px; margin-bottom: 16px; }
+  .detail h3 { font-size: 18px; margin: 20px 0 10px; display: flex; align-items: center; gap: 8px; }
+  .detail h3:first-of-type { margin-top: 0; }
+  .list { list-style: none; padding: 0; margin: 0; }
+  .list li { position: relative; padding: 12px 14px 12px 46px; background: #FAF8FD; border-radius: 14px; margin-bottom: 8px; font-size: 16px; line-height: 1.55; }
+  .list li::before { position: absolute; left: 14px; top: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+  .list.strength li::before { content: "✓"; background: #DDF4EA; color: #2F9A76; }
+  .list.caution li::before { content: "!"; background: #FFE9D6; color: #D9822B; }
+  .list.situation li::before { content: "★"; background: #FFF3C9; color: #C99A12; }
+  .list.mission { counter-reset: m; }
+  .list.mission li { counter-increment: m; cursor: pointer; user-select: none; }
+  .list.mission li::before { content: counter(m); background: var(--accent-soft); color: var(--accent); }
+  .list.mission li.checked { background: #EEF9F4; color: var(--sub); text-decoration: line-through; }
+  .list.mission li.checked::before { content: "✓"; background: #2F9A76; color: #fff; }
+  .mission-tip { font-size: 13.5px; color: var(--sub); margin-top: 4px; }
+  .others .o-row { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+  .others .o-row:last-child { border-bottom: none; }
+  .others .o-emo { flex: 0 0 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .others .o-txt { font-size: 15px; line-height: 1.5; }
+  .others .o-txt b { display: block; font-size: 15.5px; }
+  .vote-card { text-align: center; background: linear-gradient(135deg, #FFFFFF 0%, #F6F2FF 100%); }
+  .vote-nums { display: flex; justify-content: center; gap: 12px; margin: 14px 0 10px; flex-wrap: wrap; }
+  .vote-num { width: 76px; height: 76px; border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; }
+  .vote-num big { font-size: 32px; line-height: 1; }
+  .vote-num small { font-size: 12.5px; margin-top: 4px; }
+  .vote-card p { font-size: 15.5px; color: var(--sub); }
+  .disclaimer { background: #FFFBEF; border: 1.5px dashed #F1D58A; border-radius: 18px; padding: 16px; font-size: 14.5px; color: #6B5A2E; line-height: 1.65; margin-bottom: 16px; }
+  .disclaimer b { display: block; margin-bottom: 4px; font-size: 15px; }
+
+  /* 강사용 집계판 */
+  .t-row { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px dashed var(--line); }
+  .t-row:last-child { border-bottom: none; }
+  .t-name { flex: 1; font-weight: 700; font-size: 16px; }
+  .t-ctrl { display: flex; align-items: center; gap: 6px; }
+  .t-ctrl button { width: 46px; height: 46px; border-radius: 14px; border: none; background: var(--accent-soft); color: var(--accent); font-size: 22px; font-weight: 800; cursor: pointer; }
+  .t-ctrl input { width: 62px; height: 46px; border-radius: 14px; border: 2px solid var(--line); text-align: center; font-size: 18px; font-weight: 800; font-family: inherit; color: var(--text); }
+  .t-total { text-align: center; font-size: 18px; font-weight: 800; margin: 4px 0 14px; }
+
+  /* 토스트 */
+  #toast {
+    position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(54, 49, 77, .94); color: #fff;
+    padding: 13px 20px; border-radius: 16px; font-size: 15.5px;
+    opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+    max-width: calc(100% - 32px); text-align: center; z-index: 50;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  noscript { display: block; padding: 24px; text-align: center; }
+
+  @media (max-width: 360px) {
+    body { font-size: 16px; }
+    .title-wrap h1 { font-size: 28px; }
+    .q-text { font-size: 19px; }
+    .opt { font-size: 15.5px; padding: 14px 13px; }
+    .result-name { font-size: 24px; }
+    .btn { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<noscript>이 테스트는 자바스크립트가 필요해요. 브라우저 설정에서 자바스크립트를 켜 주세요.</noscript>
+<main id="app" aria-live="polite"></main>
+<div id="toast" role="status"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ===================== 1. 리더십 유형 데이터 ===================== */
+  var TYPE_ORDER = ["L", "D", "M", "C"];
+  var TYPES = {
+    L: {
+      num: 1, name: "경청형 리더", short: "경청형", emoji: "💗",
+      keywords: "공감 · 경청 · 신뢰 형성",
+      tagline: "모두의 목소리가 들리는 팀을 만드는 리더",
+      desc: "다른 사람의 의견과 감정을 세심하게 살피고, 누구나 편하게 말할 수 있는 분위기를 만드는 리더예요. 함께하는 친구들이 '이 팀에서는 말해도 괜찮다'고 느끼게 해 줘요.",
+      strengths: [
+        "친구의 표정과 마음을 잘 알아차리는 공감 능력",
+        "중간에 끊지 않고 끝까지 들어 주는 경청 태도",
+        "누구나 믿고 이야기를 꺼낼 수 있게 만드는 신뢰 형성"
+      ],
+      cautions: [
+        "다른 사람의 의견을 듣느라 내 생각을 말할 타이밍을 놓칠 수 있어요.",
+        "모두의 감정을 챙기다 보면 정작 나 자신이 지치기 쉬워요."
+      ],
+      situations: [
+        "회의에서 조용한 친구들의 의견까지 끌어내야 할 때",
+        "팀원들 사이에 서운함이나 오해가 생겼을 때",
+        "새 학기처럼 서로 어색한 팀을 하나로 모아야 할 때"
+      ],
+      missions: [
+        "회의마다 '나는 ~라고 생각해'로 내 의견을 한 번 이상 말하기",
+        "들은 의견을 정리해 '그래서 우리가 할 일'로 한 줄 메모 남기기",
+        "어려운 부탁을 받았을 때 정중하게 내 상황을 말하고 조율해 보기"
+      ]
+    },
+    D: {
+      num: 2, name: "추진형 리더", short: "추진형", emoji: "🚀",
+      keywords: "실행력 · 책임감 · 결단력",
+      tagline: "생각을 행동으로 바꾸는 리더",
+      desc: "목표를 분명히 정하고 먼저 행동으로 옮기며, 팀이 실제로 움직이도록 이끄는 리더예요. 계획이 '말'에서 끝나지 않고 '결과'로 이어지게 만들어요.",
+      strengths: [
+        "생각한 것을 바로 행동으로 옮기는 실행력",
+        "맡은 일을 끝까지 해내는 책임감",
+        "망설임이 길어질 때 방향을 정해 주는 결단력"
+      ],
+      cautions: [
+        "빠르게 결정하다 보면 다른 사람의 의견을 놓칠 수 있어요.",
+        "일을 혼자 떠안아 팀원들의 참여 기회가 줄어들 수 있어요."
+      ],
+      situations: [
+        "마감이 가까워 빠른 실행이 필요할 때",
+        "회의가 길어지는데 결론이 나지 않을 때",
+        "행사 당일 현장에서 팀을 이끌어야 할 때"
+      ],
+      missions: [
+        "결정하기 전에 '다른 생각 있는 사람?'이라고 한 번 묻기",
+        "내 할 일 중 하나를 팀원에게 맡기고 믿고 기다려 보기",
+        "일을 마친 뒤 함께한 친구에게 구체적으로 고마움 표현하기"
+      ]
+    },
+    M: {
+      num: 3, name: "조율형 리더", short: "조율형", emoji: "🤝",
+      keywords: "협력 · 갈등 조정 · 문제 해결",
+      tagline: "서로 다른 생각을 하나로 잇는 리더",
+      desc: "서로 다른 의견을 연결하고, 모두가 함께 받아들일 수 있는 해결책을 찾아가는 리더예요. 의견이 부딪히는 순간에도 팀이 흩어지지 않게 다리를 놓아 줘요.",
+      strengths: [
+        "여러 사람이 힘을 모으게 하는 협력 능력",
+        "부딪히는 의견을 차분하게 풀어 가는 갈등 조정 능력",
+        "다양한 의견 속에서 해결책을 찾아내는 문제 해결력"
+      ],
+      cautions: [
+        "모두를 만족시키려다 결정을 계속 미룰 수 있어요.",
+        "양쪽 입장을 맞추다 보면 정작 내 생각이 흐려질 수 있어요."
+      ],
+      situations: [
+        "의견이 팽팽하게 나뉜 회의를 정리해야 할 때",
+        "여러 부서나 반이 함께 행사를 준비할 때",
+        "친구들 사이의 오해를 풀어야 할 때"
+      ],
+      missions: [
+        "회의 시작 전에 '무엇을 기준으로 결정할지' 먼저 함께 정하기",
+        "정한 시간이 되면 합의한 기준에 따라 결정 내리기",
+        "의견을 조율할 때 내 생각도 하나의 선택지로 분명히 말하기"
+      ]
+    },
+    C: {
+      num: 4, name: "창의형 리더", short: "창의형", emoji: "💡",
+      keywords: "창의성 · 새로운 관점 · 변화 주도",
+      tagline: "익숙한 것에 새로운 바람을 불어넣는 리더",
+      desc: "새로운 아이디어를 제안하고, 익숙한 방식에 즐거운 변화를 만들어 내는 리더예요. '원래 이렇게 해 왔어'라는 말 앞에서 '이렇게 해 보면 어때?'라고 묻는 사람이에요.",
+      strengths: [
+        "남들이 생각하지 못한 아이디어를 떠올리는 창의성",
+        "문제를 다른 각도에서 바라보는 새로운 관점",
+        "익숙한 활동에 변화를 이끌어 내는 힘"
+      ],
+      cautions: [
+        "아이디어가 구체적인 실행 계획 없이 머물러 있을 수 있어요.",
+        "생각이 자주 바뀌면 팀원들이 따라오기 어려울 수 있어요."
+      ],
+      situations: [
+        "새로운 학생회 프로그램이나 행사를 기획할 때",
+        "참여가 저조해서 분위기를 바꿔야 할 때",
+        "기존 방법으로는 문제가 풀리지 않을 때"
+      ],
+      missions: [
+        "아이디어를 낼 때 '누가, 언제, 무엇을'까지 함께 적어 보기",
+        "아이디어 하나를 골라 작게라도 직접 실행해 보기",
+        "다른 사람의 아이디어에 내 생각을 더해 함께 발전시키기"
+      ]
+    }
+  };
+
+  /* ===================== 2. 상황형 문항 (선택지 순서는 문항마다 다르게) ===================== */
+  var QUESTIONS = [
+    { emoji: "🗣️", q: "모둠 회의에서 의견이<br>두 갈래로 팽팽하게 나뉘었어요.", sub: "이럴 때 나는?",
+      options: [
+        ["L", "양쪽이 왜 그렇게 생각하는지 이유를 충분히 들어 본다."],
+        ["D", "시간을 정해 두고 투표로 결정한 뒤 바로 다음 단계로 넘어간다."],
+        ["M", "두 의견의 공통점을 정리하고, 모두 받아들일 수 있는 기준을 찾는다."],
+        ["C", "두 의견 말고 아예 새로운 방법은 없는지 다른 관점으로 질문한다."]
+      ] },
+    { emoji: "🎪", q: "학교 축제 준비에 참여하겠다는<br>학생이 너무 적어요.", sub: "이럴 때 나는?",
+      options: [
+        ["D", "할 일 목록을 먼저 만들고, 친구들에게 한 명씩 직접 부탁한다."],
+        ["C", "참여하고 싶어지는 재미있는 홍보 방법이나 이벤트를 새로 만든다."],
+        ["L", "친구들이 왜 참여를 망설이는지 이야기를 먼저 들어 본다."],
+        ["M", "반별·동아리별로 부담을 나눠 맡을 수 있는 방법을 함께 정한다."]
+      ] },
+    { emoji: "⚡", q: "행사 당일, 갑자기 음향 장비가 고장 났어요.", sub: "이럴 때 나는?",
+      options: [
+        ["M", "관련된 사람들을 모아 상황을 공유하고 해결 방법을 함께 정한다."],
+        ["L", "당황한 팀원들을 먼저 진정시키고, 지금 무엇이 필요한지 묻는다."],
+        ["C", "음향 없이도 진행할 수 있는 색다른 방식을 즉석에서 떠올린다."],
+        ["D", "바로 담당 선생님께 연락하고 대체 장비를 구하러 움직인다."]
+      ] },
+    { emoji: "🤫", q: "회의 내내 한 번도 말하지 못한 친구가 있어요.", sub: "이럴 때 나는?",
+      options: [
+        ["C", "포스트잇에 적어 붙이는 것처럼 말하기 쉬운 회의 방식을 시도한다."],
+        ["L", "회의가 끝난 뒤 따로 다가가 어떤 생각이었는지 물어본다."],
+        ["D", "\"너는 어떻게 생각해?\" 하고 자연스럽게 말할 차례를 넘겨준다."],
+        ["M", "돌아가며 한 마디씩 하는 회의 규칙을 모두와 함께 정한다."]
+      ] },
+    { emoji: "⏰", q: "행사가 코앞인데 준비 시간이 턱없이 부족해요.", sub: "이럴 때 나는?",
+      options: [
+        ["D", "우선순위를 정하고 오늘 끝낼 일부터 바로 시작한다."],
+        ["M", "각자 가능한 시간을 확인해서 남은 일을 다시 나눈다."],
+        ["C", "준비 과정을 확 줄일 수 있는 더 간단한 방법을 찾아본다."],
+        ["L", "팀원들이 너무 지치지 않았는지 살피고 서로 챙기게 한다."]
+      ] },
+    { emoji: "💬", q: "친한 친구 두 명 사이에 오해가 생겨<br>분위기가 어색해졌어요.", sub: "이럴 때 나는?",
+      options: [
+        ["L", "한 명씩 따로 만나 속상했던 마음을 들어 준다."],
+        ["C", "둘이 함께 웃으며 풀 수 있는 활동이나 계기를 만들어 본다."],
+        ["M", "두 친구가 함께 이야기할 자리를 만들고 대화를 이어 준다."],
+        ["D", "오해가 더 커지기 전에 사실을 확인하고 빨리 정리한다."]
+      ] },
+    { emoji: "📝", q: "학생회에서 새로운 프로그램을 기획하게 되었어요.", sub: "가장 먼저 나는?",
+      options: [
+        ["M", "여러 부서의 의견을 모아 모두가 함께할 수 있는 계획으로 다듬는다."],
+        ["D", "목표와 일정을 먼저 정하고 각자의 역할을 나눈다."],
+        ["L", "학생들이 정말 원하는 것이 무엇인지 설문으로 의견을 모은다."],
+        ["C", "지금까지 없던 독특한 아이디어를 여러 개 던져 본다."]
+      ] },
+    { emoji: "📦", q: "팀원 한 명이 맡은 일을<br>약속한 날까지 끝내지 못했어요.", sub: "이럴 때 나는?",
+      options: [
+        ["C", "같은 일이 반복되지 않도록 진행 상황을 공유하는 새로운 방법을 만든다."],
+        ["M", "팀 전체가 일정을 다시 조정하고 다른 사람과 일을 나눈다."],
+        ["D", "마감을 지키기 위해 남은 일을 내가 일부 맡아서 해결한다."],
+        ["L", "혹시 힘든 일이 있었는지 먼저 물어본다."]
+      ] },
+    { emoji: "🧭", q: "중요한 결정을 내려야 하는데<br>시간이 얼마 남지 않았어요.", sub: "이럴 때 나는?",
+      options: [
+        ["L", "짧게라도 핵심 구성원들의 생각을 한 번씩 들어 본다."],
+        ["M", "꼭 지켜야 할 기준 두세 가지를 정하고 거기에 맞는 안을 고른다."],
+        ["D", "가장 현실적인 안을 골라 책임지고 결정한다."],
+        ["C", "기존 선택지 말고 더 나은 방법이 없는지 짧게 아이디어를 모아 본다."]
+      ] },
+    { emoji: "🌟", q: "내가 생각하는 '좋은 학생회 활동'은?", sub: "가장 마음에 와닿는 것은?",
+      options: [
+        ["D", "약속한 일을 끝까지 실천해서 결과로 보여 주는 활동"],
+        ["L", "모든 학생의 목소리가 존중받는 활동"],
+        ["C", "학교에 새로운 즐거움과 변화를 만드는 활동"],
+        ["M", "서로 다른 생각이 모여 함께 만들어 가는 활동"]
+      ] }
+  ];
+  var TOTAL = QUESTIONS.length;
+  var LETTERS = ["A", "B", "C", "D"];
+  var DISCLAIMER = "이 결과는 자기 성찰을 위한 교육 활동이며, 과학적으로 검증된 심리검사나 진단 결과가 아닙니다. 나를 하나의 유형으로 규정하기보다 다양한 리더십 강점을 발견하는 데 활용하세요.";
+
+  /* ===================== 3. 상태 저장 (이 기기에만 저장, 서버 전송 없음) ===================== */
+  var KEY = "leader-test-v1";
+  var TKEY = "leader-test-teacher-v1";
+
+  function blankAnswers() { var a = []; for (var i = 0; i < TOTAL; i++) a.push(null); return a; }
+  function defaultState() { return { screen: "start", current: 0, answers: blankAnswers(), last: null, missions: {}, tab: 0 }; }
+
+  function validAnswers(a) {
+    if (!Array.isArray(a) || a.length !== TOTAL) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] !== null && !(typeof a[i] === "number" && a[i] >= 0 && a[i] <= 3)) return false;
+    }
+    return true;
+  }
+  function allAnswered(a) { for (var i = 0; i < a.length; i++) if (a[i] === null) return false; return true; }
+  function answeredCount(a) { var n = 0; for (var i = 0; i < a.length; i++) if (a[i] !== null) n++; return n; }
+
+  function loadState() {
+    var s = defaultState();
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return s;
+      var d = JSON.parse(raw);
+      if (d && validAnswers(d.answers)) s.answers = d.answers;
+      if (d && typeof d.current === "number" && d.current >= 0 && d.current < TOTAL) s.current = Math.floor(d.current);
+      if (d && d.last && validAnswers(d.last) && allAnswered(d.last)) s.last = d.last;
+      if (d && d.missions && typeof d.missions === "object") s.missions = d.missions;
+      if (d && (d.screen === "quiz" || d.screen === "result" || d.screen === "start")) s.screen = d.screen;
+      if (s.screen === "result" && !s.last) s.screen = "start";
+    } catch (e) { s = defaultState(); }
+    return s;
+  }
+  function saveState() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({
+        screen: state.screen, current: state.current, answers: state.answers, last: state.last, missions: state.missions
+      }));
+    } catch (e) { /* 저장 불가(사생활 보호 모드 등)여도 테스트는 정상 진행 */ }
+  }
+
+  var state = loadState();
+
+  /* ===================== 4. 점수 계산 ===================== */
+  function computeScores(answers) {
+    var sc = { L: 0, D: 0, M: 0, C: 0 };
+    for (var i = 0; i < TOTAL; i++) {
+      var a = answers[i];
+      if (a === null) continue;
+      sc[QUESTIONS[i].options[a][0]] += 1;
+    }
+    var max = 0;
+    TYPE_ORDER.forEach(function (t) { if (sc[t] > max) max = sc[t]; });
+    var top = TYPE_ORDER.filter(function (t) { return sc[t] === max; });
+    var rest = TYPE_ORDER.filter(function (t) { return sc[t] !== max; }).map(function (t) { return sc[t]; });
+    var second = rest.length ? Math.max.apply(null, rest) : null;
+    return { scores: sc, max: max, top: top, gap: second === null ? null : max - second };
+  }
+
+  /* ===================== 5. 화면 그리기 ===================== */
+  var app = document.getElementById("app");
+
+  function heroSVG() {
+    function face(cx, cy, r, color, cls, deco) {
+      return '<g class="bob ' + cls + '">' +
+        '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + color + '"/>' +
+        '<ellipse cx="' + (cx - r * 0.55) + '" cy="' + (cy + r * 0.2) + '" rx="' + (r * 0.16) + '" ry="' + (r * 0.1) + '" fill="#fff" opacity=".55"/>' +
+        '<ellipse cx="' + (cx + r * 0.55) + '" cy="' + (cy + r * 0.2) + '" rx="' + (r * 0.16) + '" ry="' + (r * 0.1) + '" fill="#fff" opacity=".55"/>' +
+        '<circle cx="' + (cx - r * 0.3) + '" cy="' + (cy - r * 0.08) + '" r="' + (r * 0.1) + '" fill="#36314D"/>' +
+        '<circle cx="' + (cx + r * 0.3) + '" cy="' + (cy - r * 0.08) + '" r="' + (r * 0.1) + '" fill="#36314D"/>' +
+        '<path d="M' + (cx - r * 0.22) + ' ' + (cy + r * 0.22) + ' Q' + cx + ' ' + (cy + r * 0.45) + ' ' + (cx + r * 0.22) + ' ' + (cy + r * 0.22) + '" stroke="#36314D" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+        deco + '</g>';
+    }
+    return '<svg class="hero-art" viewBox="0 0 340 190" role="img" aria-label="서로 다른 네 명의 귀여운 리더 캐릭터">' +
+      '<ellipse cx="170" cy="168" rx="150" ry="14" fill="#E9E2F7"/>' +
+      '<path d="M40 30 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4z" fill="#FFD66B"/>' +
+      '<path d="M300 22 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#B5A3F2"/>' +
+      '<circle cx="280" cy="70" r="5" fill="#F7A8C0"/><circle cx="62" cy="80" r="4" fill="#8FD6BE"/>' +
+      face(58, 125, 36, "#F7A8C0", "", '<path d="M50 72 c0-8 12-8 12 0 c0 8-12 12-12 12 s-12-4-12-12 c0-8 12-8 12 0z" transform="translate(4 -6) scale(.8)" fill="#F17FA0"/>') +
+      face(135, 110, 42, "#FFBE7A", "d1", '<path d="M135 52 l10 14 h-20z" fill="#FF9F5A"/>') +
+      face(212, 118, 40, "#8FD6BE", "d2", '<path d="M192 66 q20-14 40 0" stroke="#4FB892" stroke-width="5" fill="none" stroke-linecap="round"/>') +
+      face(284, 128, 34, "#B5A3F2", "d3", '<circle cx="284" cy="78" r="9" fill="#FFE27A"/><rect x="280" y="86" width="8" height="6" rx="2" fill="#E0C25A"/>') +
+      '</svg>';
+  }
+
+  function typeChip(t) {
+    var T = TYPES[t];
+    return '<div class="type-chip" style="background:var(--' + t + '-soft)"><div class="emo">' + T.emoji + '</div><b>' + T.name + '</b><span>' + T.keywords + '</span></div>';
+  }
+
+  function renderStart() {
+    var n = answeredCount(state.answers);
+    var inProgress = n > 0;
+    var html = '<section class="fade-in">' + heroSVG() +
+      '<div class="title-wrap"><span class="badge">학생회 리더십 캠프</span>' +
+      '<h1>나는 어떤 리더일까?</h1>' +
+      '<p>학교생활과 학생회 활동 속 10가지 상황에서<br>나라면 어떻게 할지 골라 보세요.<br>나만의 리더십 강점과 성장 방향을 발견할 수 있어요.</p></div>' +
+      '<div class="pills"><span class="pill">⏱ 약 3분</span><span class="pill">📝 10문항</span><span class="pill">🔒 이름 입력 없음</span></div>' +
+      '<div class="stack" style="margin-bottom:18px">';
+    if (inProgress) {
+      html += '<button class="btn btn-primary" data-act="continue">이어서 하기 (' + n + '/' + TOTAL + ')</button>' +
+              '<button class="btn btn-secondary" data-act="restart">처음부터 다시 하기</button>';
+    } else {
+      html += '<button class="btn btn-primary" data-act="start">테스트 시작하기 ✨</button>';
+    }
+    if (state.last) html += '<button class="btn btn-soft" data-act="view-last">지난 결과 다시 보기</button>';
+    html += '</div>' +
+      '<p class="note">정답은 없어요.<br>평소의 나와 가장 가까운 행동을 솔직하게 골라 주세요.</p>' +
+      '<p class="note">응답은 어디에도 전송되지 않고 내 휴대폰에서만 계산돼요.</p>' +
+      '</section>';
+    app.innerHTML = html;
+  }
+
+  function renderQuiz() {
+    var i = state.current;
+    var Q = QUESTIONS[i];
+    var sel = state.answers[i];
+    var isLast = i === TOTAL - 1;
+    var pct = Math.round((answeredCount(state.answers) / TOTAL) * 100);
+    var dots = "";
+    for (var k = 0; k < TOTAL; k++) {
+      dots += '<i class="' + (k === i ? "now" : (state.answers[k] !== null ? "done" : "")) + '"></i>';
+    }
+    var opts = Q.options.map(function (o, idx) {
+      var on = sel === idx;
+      return '<button class="opt' + (on ? " selected" : "") + '" data-act="pick" data-idx="' + idx + '" aria-pressed="' + on + '">' +
+        '<span class="letter">' + LETTERS[idx] + '</span><span class="txt">' + o[1] + '</span><span class="check" aria-hidden="true">✓</span></button>';
+    }).join("");
+    var nextLabel = isLast ? "결과 보기 ✨" : "다음 →";
+    app.innerHTML = '<section class="fade-in">' +
+      '<div class="progress-head"><span class="count">' + (i + 1) + ' / ' + TOTAL + '</span>' +
+      '<button class="home" data-act="home">처음으로</button></div>' +
+      '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="응답 진행률"><div style="width:' + Math.max(pct, 3) + '%"></div></div>' +
+      '<div class="dots" aria-hidden="true">' + dots + '</div>' +
+      '<div class="card q-card"><div class="q-emoji" aria-hidden="true">' + Q.emoji + '</div>' +
+      '<div class="q-num">QUESTION ' + (i + 1) + '</div>' +
+      '<h2 class="q-text">' + Q.q + '</h2><p class="q-sub">' + Q.sub + '</p></div>' +
+      '<div class="options" role="group" aria-label="선택지">' + opts + '</div>' +
+      '<div class="btn-row"><button class="btn btn-secondary btn-prev" data-act="prev">← 이전</button>' +
+      '<button class="btn btn-primary' + (sel === null ? " is-disabled" : "") + '" data-act="next" aria-disabled="' + (sel === null) + '">' + nextLabel + '</button></div>' +
+      '<p class="hint" id="hint">' + (sel === null ? "답을 하나 고르면 다음으로 넘어갈 수 있어요." : (isLast ? "모든 문항에 답했어요! 결과를 확인해 보세요." : "")) + '</p>' +
+      '</section>';
+  }
+
+  function listHTML(cls, items) {
+    return '<ul class="list ' + cls + '">' + items.map(function (s) { return '<li>' + s + '</li>'; }).join("") + '</ul>';
+  }
+
+  function detailHTML(t) {
+    var T = TYPES[t];
+    var missions = T.missions.map(function (m, idx) {
+      var id = t + idx;
+      var done = !!state.missions[id];
+      return '<li data-act="mission" data-id="' + id + '" class="' + (done ? "checked" : "") + '" role="checkbox" aria-checked="' + done + '" tabindex="0">' + m + '</li>';
+    }).join("");
+    return '<div class="detail">' +
+      '<p class="detail-desc" style="background:var(--' + t + '-soft)">' + T.desc + '</p>' +
+      '<h3>💪 나의 강점</h3>' + listHTML("strength", T.strengths) +
+      '<h3>🔍 주의할 점</h3>' + listHTML("caution", T.cautions) +
+      '<h3>🌈 강점이 빛나는 순간</h3>' + listHTML("situation", T.situations) +
+      '<h3>🎯 앞으로 실천할 성장 미션</h3><ul class="list mission">' + missions + '</ul>' +
+      '<p class="mission-tip">실천한 미션은 눌러서 체크해 보세요. (내 휴대폰에만 저장돼요)</p>' +
+      '</div>';
+  }
+
+  function renderResult() {
+    var r = computeScores(state.last);
+    var top = r.top;
+    var multi = top.length > 1;
+    if (state.tab >= top.length) state.tab = 0;
+
+    var icons = top.map(function (t) {
+      return '<div class="result-icon" style="background:var(--' + t + '-soft)">' + TYPES[t].emoji + '</div>';
+    }).join("");
+    var name = multi ? top.map(function (t) { return TYPES[t].short; }).join(" + ") + " 리더" : TYPES[top[0]].name;
+    var tagline = multi
+      ? "여러 유형의 강점을 고르게 가지고 있는 리더예요."
+      : TYPES[top[0]].tagline;
+
+    var tieNote = "";
+    if (multi) {
+      tieNote = '<p class="tie-note">' + top.length + '개 유형의 점수가 같아요. 어느 하나로 정하지 않고 모두 나의 대표 유형으로 보여 드려요. 상황에 따라 여러 강점을 꺼내 쓸 수 있다는 뜻이에요!</p>';
+    } else if (r.gap !== null && r.gap <= 1) {
+      var near = TYPE_ORDER.filter(function (t) { return r.scores[t] === r.max - r.gap && t !== top[0]; })
+        .map(function (t) { return TYPES[t].short; }).join(", ");
+      tieNote = '<p class="tie-note">' + near + ' 유형과 단 ' + r.gap + '점 차이예요. 두 유형의 강점을 함께 가지고 있을 가능성이 커요.</p>';
+    }
+
+    var bars = TYPE_ORDER.map(function (t) {
+      var isTop = top.indexOf(t) >= 0;
+      return '<div class="row"><div class="lbl"><span>' + TYPES[t].emoji + ' ' + TYPES[t].name +
+        (isTop ? '<span class="top-tag">대표</span>' : '') + '</span><span>' + r.scores[t] + '점</span></div>' +
+        '<div class="track"><div class="fill" data-w="' + (r.scores[t] / TOTAL * 100) + '" style="background:var(--' + t + ')"></div></div></div>';
+    }).join("");
+
+    var tabs = "";
+    if (multi) {
+      tabs = '<div class="tabs" role="tablist">' + top.map(function (t, idx) {
+        return '<button class="tab' + (idx === state.tab ? " active" : "") + '" role="tab" aria-selected="' + (idx === state.tab) + '" data-act="tab" data-idx="' + idx + '">' + TYPES[t].emoji + ' ' + TYPES[t].short + '</button>';
+      }).join("") + '</div>';
+    }
+
+    var others = TYPE_ORDER.filter(function (t) { return top.indexOf(t) < 0; });
+    var othersHTML = "";
+    if (others.length) {
+      othersHTML = '<div class="card others"><div class="section-label">함께 키워 볼 다른 리더십</div>' +
+        others.map(function (t) {
+          return '<div class="o-row"><div class="o-emo" style="background:var(--' + t + '-soft)">' + TYPES[t].emoji + '</div>' +
+            '<div class="o-txt"><b>' + TYPES[t].name + '</b>' + TYPES[t].keywords + '</div></div>';
+        }).join("") +
+        '<p class="note" style="text-align:left">유형 사이에 우열은 없어요. 좋은 리더는 상황에 따라 여러 유형의 강점을 함께 발휘한답니다.</p></div>';
+    } else {
+      othersHTML = '<div class="card"><p class="note" style="margin:0">네 유형의 점수가 모두 같아요! 유형 사이에 우열은 없고, 상황에 따라 여러 강점을 함께 발휘하는 것이 진짜 리더십이에요.</p></div>';
+    }
+
+    var voteNums = top.map(function (t) {
+      return '<div class="vote-num" style="background:var(--' + t + '-soft);color:var(--' + t + '-deep)"><big>' + TYPES[t].num + '</big><small>' + TYPES[t].short + '</small></div>';
+    }).join("");
+    var voteMsg = multi
+      ? '대표 유형이 여러 개라면, 그중 <b>지금의 나와 가장 닮았다고 느끼는 유형 하나만</b> 골라 주세요.'
+      : '강사님 화면의 네 가지 유형 중 <b>' + TYPES[top[0]].num + '번 ' + TYPES[top[0]].short + '</b>을 익명으로 한 번 선택해 주세요.';
+
+    app.innerHTML = '<section class="fade-in">' +
+      '<div class="card result-hero"><div class="eyebrow">나의 리더십 유형은</div>' +
+      '<div class="result-icons' + (multi ? " multi" : "") + '">' + icons + '</div>' +
+      '<h1 class="result-name">' + name + '</h1>' +
+      '<p class="result-tagline">' + tagline + '</p>' +
+      '<span class="score-badge">' + r.max + '점 / ' + TOTAL + '점</span>' + tieNote + '</div>' +
+
+      '<div class="card"><div class="section-label">📊 유형별 점수</div><div class="bars">' + bars + '</div></div>' +
+
+      '<div class="card">' + tabs + '<div id="detail">' + detailHTML(top[state.tab]) + '</div></div>' +
+
+      othersHTML +
+
+      '<div class="card vote-card"><div class="section-label" style="margin-bottom:4px">🙋 강의실 참여 시간</div>' +
+      '<div class="vote-nums">' + voteNums + '</div><p>' + voteMsg + '<br>이름은 적지 않아요. 강사님 안내에 따라 참여해 주세요.</p></div>' +
+
+      '<div class="disclaimer" role="note"><b>📌 꼭 읽어 주세요</b>' + DISCLAIMER + '</div>' +
+
+      '<div class="stack"><button class="btn btn-primary" data-act="share">📤 결과 공유하기</button>' +
+      '<button class="btn btn-secondary" data-act="retest">🔄 다시 테스트하기</button></div>' +
+      '<button class="link-btn" data-act="home">처음 화면으로</button>' +
+      '</section>';
+
+    requestAnimationFrame(function () {
+      setTimeout(function () {
+        var fills = app.querySelectorAll(".fill");
+        for (var i = 0; i < fills.length; i++) fills[i].style.width = fills[i].getAttribute("data-w") + "%";
+      }, 60);
+    });
+  }
+
+  /* ----- 강사용 집계판 (주소 끝에 #teacher) : 강사 기기에만 저장 ----- */
+  function loadTally() {
+    var t = { L: 0, D: 0, M: 0, C: 0 };
+    try {
+      var d = JSON.parse(localStorage.getItem(TKEY) || "{}");
+      TYPE_ORDER.forEach(function (k) { var v = parseInt(d[k], 10); if (v >= 0 && v < 10000) t[k] = v; });
+    } catch (e) {}
+    return t;
+  }
+  var tally = loadTally();
+  function saveTally() { try { localStorage.setItem(TKEY, JSON.stringify(tally)); } catch (e) {} }
+
+  function renderTeacher() {
+    var total = TYPE_ORDER.reduce(function (s, k) { return s + tally[k]; }, 0);
+    var rows = TYPE_ORDER.map(function (k) {
+      return '<div class="t-row"><div class="t-name">' + TYPES[k].num + '. ' + TYPES[k].emoji + ' ' + TYPES[k].short + '</div>' +
+        '<div class="t-ctrl"><button data-act="t-minus" data-k="' + k + '" aria-label="' + TYPES[k].short + ' 1 빼기">−</button>' +
+        '<input type="number" inputmode="numeric" min="0" max="999" value="' + tally[k] + '" data-k="' + k + '" aria-label="' + TYPES[k].short + ' 인원">' +
+        '<button data-act="t-plus" data-k="' + k + '" aria-label="' + TYPES[k].short + ' 1 더하기">+</button></div></div>';
+    }).join("");
+    var bars = TYPE_ORDER.map(function (k) {
+      var p = total ? Math.round(tally[k] / total * 1000) / 10 : 0;
+      return '<div class="row"><div class="lbl"><span>' + TYPES[k].emoji + ' ' + TYPES[k].name + '</span><span>' + tally[k] + '명 · ' + p + '%</span></div>' +
+        '<div class="track"><div class="fill" style="width:' + p + '%;background:var(--' + k + ')"></div></div></div>';
+    }).join("");
+    app.innerHTML = '<section class="fade-in">' +
+      '<div class="title-wrap"><span class="badge">강사용</span><h1 style="font-size:26px">우리 반 리더십 유형 분포</h1>' +
+      '<p>스티커·손들기 등으로 센 인원을 입력하면 비율 그래프가 바로 그려져요. 이 기기에만 저장되며 학생 응답은 수집하지 않아요.</p></div>' +
+      '<div class="card">' + rows + '</div>' +
+      '<div class="card"><p class="t-total">총 ' + total + '명 참여</p><div class="bars" id="t-bars">' + bars + '</div></div>' +
+      '<div class="stack"><button class="btn btn-secondary" data-act="t-reset">숫자 모두 0으로</button>' +
+      '<button class="btn btn-soft" data-act="t-exit">학생용 테스트 화면으로</button></div>' +
+      '</section>';
+  }
+
+  function render() {
+    if (location.hash === "#teacher") { renderTeacher(); return; }
+    if (state.screen === "quiz") renderQuiz();
+    else if (state.screen === "result" && state.last) renderResult();
+    else { state.screen = "start"; renderStart(); }
+  }
+  function go(screen) {
+    state.screen = screen;
+    saveState();
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  /* ===================== 6. 공유 & 알림 ===================== */
+  var toastTimer = null;
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove("show"); }, 2400);
+  }
+
+  function shareText() {
+    var r = computeScores(state.last);
+    var name = r.top.map(function (t) { return TYPES[t].emoji + " " + TYPES[t].name; }).join(" + ");
+    var kw = r.top.map(function (t) { return TYPES[t].keywords; }).join(" / ");
+    return "[나는 어떤 리더일까?]\n나의 리더십 유형: " + name + "\n나의 강점: " + kw + "\n\n나도 해 보기 👉";
+  }
+  function pageURL() { return location.href.split("#")[0]; }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.top = "-1000px"; ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () {
+        toast("결과가 복사됐어요! 메신저에 붙여 넣어 공유해 보세요.");
+      }, function () {
+        if (fallbackCopy(text)) toast("결과가 복사됐어요! 메신저에 붙여 넣어 공유해 보세요.");
+        else window.prompt("아래 내용을 길게 눌러 복사하세요.", text);
+      });
+    } else if (fallbackCopy(text)) {
+      toast("결과가 복사됐어요! 메신저에 붙여 넣어 공유해 보세요.");
+    } else {
+      window.prompt("아래 내용을 길게 눌러 복사하세요.", text);
+    }
+  }
+  function doShare() {
+    var text = shareText();
+    var url = pageURL();
+    if (navigator.share) {
+      navigator.share({ title: "나는 어떤 리더일까?", text: text, url: url }).catch(function (err) {
+        if (err && err.name === "AbortError") return; // 사용자가 공유 창을 닫음
+        copyText(text + " " + url);
+      });
+    } else {
+      copyText(text + " " + url);
+    }
+  }
+
+  /* ===================== 7. 버튼 동작 ===================== */
+  function firstUnanswered() { for (var i = 0; i < TOTAL; i++) if (state.answers[i] === null) return i; return -1; }
+
+  app.addEventListener("click", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-act]") : null;
+    if (!el) return;
+    var act = el.getAttribute("data-act");
+
+    switch (act) {
+      case "start":
+        state.answers = blankAnswers(); state.current = 0; go("quiz"); break;
+      case "continue": {
+        var f = firstUnanswered();
+        state.current = f >= 0 ? f : TOTAL - 1;
+        go("quiz"); break;
+      }
+      case "restart":
+        if (window.confirm("지금까지 고른 답이 지워져요. 처음부터 다시 할까요?")) {
+          state.answers = blankAnswers(); state.current = 0; go("quiz");
+        }
+        break;
+      case "view-last":
+        state.tab = 0; go("result"); break;
+      case "home":
+        go("start"); break;
+      case "pick": {
+        var idx = parseInt(el.getAttribute("data-idx"), 10);
+        state.answers[state.current] = idx;
+        saveState();
+        renderQuiz();
+        break;
+      }
+      case "prev":
+        if (state.current > 0) { state.current -= 1; saveState(); renderQuiz(); window.scrollTo(0, 0); }
+        else go("start");
+        break;
+      case "next": {
+        if (state.answers[state.current] === null) {
+          var hint = document.getElementById("hint");
+          if (hint) hint.textContent = "⚠️ 답을 먼저 골라 주세요!";
+          toast("답을 하나 골라야 다음으로 넘어갈 수 있어요.");
+          break;
+        }
+        if (state.current < TOTAL - 1) {
+          state.current += 1; saveState(); renderQuiz(); window.scrollTo(0, 0);
+        } else {
+          var miss = firstUnanswered();
+          if (miss >= 0) {
+            state.current = miss; saveState(); renderQuiz(); window.scrollTo(0, 0);
+            toast((miss + 1) + "번 문항에 아직 답하지 않았어요.");
+          } else {
+            state.last = state.answers.slice();
+            state.answers = blankAnswers(); // 완료 후 진행 중 상태 초기화 → 처음 화면에 '지난 결과 다시 보기'만 표시
+            state.current = 0;
+            state.missions = {};
+            state.tab = 0;
+            go("result");
+          }
+        }
+        break;
+      }
+      case "tab":
+        state.tab = parseInt(el.getAttribute("data-idx"), 10) || 0;
+        renderResult();
+        break;
+      case "mission": {
+        var id = el.getAttribute("data-id");
+        state.missions[id] = !state.missions[id];
+        saveState();
+        el.classList.toggle("checked", !!state.missions[id]);
+        el.setAttribute("aria-checked", String(!!state.missions[id]));
+        if (state.missions[id]) toast("멋져요! 미션 하나 완료 🎉");
+        break;
+      }
+      case "share":
+        doShare(); break;
+      case "retest":
+        if (window.confirm("새로 테스트를 시작할까요? 지금 결과는 '지난 결과 다시 보기'로 다시 볼 수 있어요.")) {
+          state.answers = blankAnswers(); state.current = 0; go("quiz");
+        }
+        break;
+      /* 강사용 */
+      case "t-plus":
+      case "t-minus": {
+        var k = el.getAttribute("data-k");
+        tally[k] = Math.max(0, Math.min(999, tally[k] + (act === "t-plus" ? 1 : -1)));
+        saveTally(); renderTeacher(); break;
+      }
+      case "t-reset":
+        if (window.confirm("입력한 숫자를 모두 0으로 바꿀까요?")) {
+          tally = { L: 0, D: 0, M: 0, C: 0 }; saveTally(); renderTeacher();
+        }
+        break;
+      case "t-exit":
+        if (history.replaceState) history.replaceState(null, "", pageURL()); else location.hash = "";
+        render(); window.scrollTo(0, 0); break;
+    }
+  });
+
+  app.addEventListener("keydown", function (e) {
+    if ((e.key === "Enter" || e.key === " ") && e.target && e.target.getAttribute && e.target.getAttribute("data-act") === "mission") {
+      e.preventDefault(); e.target.click();
+    }
+  });
+
+  app.addEventListener("change", function (e) {
+    var el = e.target;
+    if (el && el.tagName === "INPUT" && el.getAttribute("data-k")) {
+      var v = parseInt(el.value, 10);
+      tally[el.getAttribute("data-k")] = isNaN(v) ? 0 : Math.max(0, Math.min(999, v));
+      saveTally(); renderTeacher();
+    }
+  });
+
+  window.addEventListener("hashchange", function () { render(); window.scrollTo(0, 0); });
+
+  render();
+})();
+</script>
+</body>
+</html>
